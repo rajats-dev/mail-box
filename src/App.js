@@ -9,11 +9,10 @@ import ForgotPass from "./components/pages/ForgotPass";
 import Home from "./components/pages/Home";
 import { useSelector } from "react-redux";
 import ProfilePage from "./components/pages/ProfilePage";
+import Mailbox from "./components/pages/MailBox/Mailbox";
 
 function App() {
   const isUserLoggedIn = useSelector((state) => state.auth.isUserLoggedIn);
-
-  console.log(isUserLoggedIn);
 
   return (
     <Switch>
@@ -29,6 +28,9 @@ function App() {
       </Route>
       <Route path="/profile">
         <ProfilePage />
+      </Route>
+      <Route path="/mailbox">
+        <Mailbox />
       </Route>
     </Switch>
   );
