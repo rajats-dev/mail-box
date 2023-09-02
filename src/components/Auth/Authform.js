@@ -1,6 +1,8 @@
 import React, { useRef, useState } from "react";
 import classes from "./Authform.module.css";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { useDispatch } from "react-redux";
+import { authAction } from "../store/auth-Slice";
 
 const Authform = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -8,6 +10,8 @@ const Authform = () => {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const confirmPasswordInputRef = useRef();
+
+  const dispatch = useDispatch();
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -60,7 +64,8 @@ const Authform = () => {
           }
         })
         .then((data) => {
-          alert("Successfully Completed!");
+          dispatch(authAction.login());
+          localStorage.setItem("token", data.idToken);
           console.log(data);
         })
         .catch((err) => {
