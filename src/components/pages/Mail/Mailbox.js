@@ -34,7 +34,19 @@ const Mailbox = () => {
         method: "POST",
         body: JSON.stringify(obj),
       }
-    );
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .catch((error) => {
+        return error;
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   };
 
   return (

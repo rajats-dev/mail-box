@@ -9,30 +9,31 @@ import ForgotPass from "./components/pages/ForgotPass";
 import Home from "./components/pages/Home";
 import { useSelector } from "react-redux";
 import ProfilePage from "./components/pages/ProfilePage";
-import Mailbox from "./components/pages/MailBox/Mailbox";
+import Mailbox from "./components/pages/Mail/Mailbox";
+import Inbox from "./components/pages/Mail/Inbox";
+import Root from "./components/pages/Root";
 
 function App() {
   const isUserLoggedIn = useSelector((state) => state.auth.isUserLoggedIn);
 
   return (
-    <Switch>
-      <Route path="/" exact>
-        <Home />
-      </Route>
-      <Route path="/auth">
-        {!isUserLoggedIn && <Authform />}
-        {isUserLoggedIn && <Redirect to="/profile" />}
-      </Route>
-      <Route path="/forgotPass">
-        <ForgotPass />
-      </Route>
-      <Route path="/profile">
-        <ProfilePage />
-      </Route>
-      <Route path="/mailbox">
-        <Mailbox />
-      </Route>
-    </Switch>
+    <Root>
+      <Switch>
+        <Route path="/" exact>
+          <Home />
+        </Route>
+        <Route path="/auth">
+          {!isUserLoggedIn && <Authform />}
+          {isUserLoggedIn && <Redirect to="/profile" />}
+        </Route>
+        <Route path="/forgotPass">
+          <ForgotPass />
+        </Route>
+        <Route path="/profile">
+          <ProfilePage />
+        </Route>
+      </Switch>
+    </Root>
   );
 }
 

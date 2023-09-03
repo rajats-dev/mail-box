@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import Mailbox from "./Mail/Mailbox";
+import Inbox from "./Mail/Inbox";
 
 const ProfilePage = () => {
+  const [show, setShow] = useState(null);
   return (
     <div className="container">
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        Welcome to the Mail
-        <Link to="/mailbox">
-          <Button>MailBox</Button>
-        </Link>
-      </div>
+      <div>Welcome to the Mail</div>
+      <Button onClick={() => setShow("compose")}>Compose Mail</Button>
+      <Button onClick={() => setShow("inbox")}>Inbox</Button>
+      <hr></hr>
+      {show === "compose" && <Mailbox />}
+      {show === "inbox" && <Inbox />}
     </div>
   );
 };

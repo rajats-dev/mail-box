@@ -66,6 +66,7 @@ const Authform = () => {
         .then((data) => {
           dispatch(authAction.login());
           localStorage.setItem("token", data.idToken);
+          localStorage.setItem("emialId", data.email);
           console.log(data);
         })
         .catch((err) => {
