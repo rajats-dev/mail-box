@@ -26,6 +26,7 @@ const Mailbox = () => {
       enteredSubject: enteredSubject,
       enteredEmailBody: emailBody,
       id: Math.random().toString(),
+      isRead: false,
     };
 
     fetch(

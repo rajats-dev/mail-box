@@ -1,10 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import Mailbox from "./Mail/Mailbox";
 import Inbox from "./Mail/Inbox";
+import { useDispatch, useSelector } from "react-redux";
+import { mailAction } from "../store/mail-Slice";
 
 const ProfilePage = () => {
   const [show, setShow] = useState(null);
+  const dispatch = useDispatch();
+
+  const Email = localStorage.getItem("emialId");
+  const idEmail = Email ? Email.replace(/[@.]/g, "") : null;
+
+  useEffect(() => {
+    fetch(`https://mail-box-fb2fe-default-rtdb.firebaseio.com/${idEmail}.json`)
+      .then((res) => {
+        return res.json();
+      })
+      .catch((error) => {
+        return error;
+      })
+      .then((data) => {
+        console.log(data);
+        let loadData = [];
+        for (const key in data) {
+          loadData.push({
+            ckey: key,
+            emailBody: data[key].enteredEmailBody,
+            subject: data[key].enteredSubject,
+            senderEmail: data[key].enteredEmail,
+            isRead: data[key].isRead,
+          });
+        }
+        console.log(loadData);
+
+        dispatch(mailAction.mailData(loadData));
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, [dispatch]);
+
   return (
     <div className="container">
       <div>Welcome to the Mail</div>

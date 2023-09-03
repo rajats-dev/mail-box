@@ -1,42 +1,30 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Col, ListGroup, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom/cjs/react-router-dom";
 import { mailAction } from "../../store/mail-Slice";
-
-const Email = localStorage.getItem("emialId");
-const idEmail = Email.replace(/[@.]/g, "");
 
 const Inbox = () => {
   const items = useSelector((state) => state.mail.items);
+  const isRead = useSelector((state) => state.mail.isRead);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    fetch(`https://mail-box-fb2fe-default-rtdb.firebaseio.com/${idEmail}.json`)
-      .then((res) => {
-        return res.json();
-      })
-      .catch((error) => {
-        return error;
-      })
-      .then((data) => {
-        // console.log(data);
-        let loadData = [];
-        for (const key in data) {
-          loadData.push({
-            ckey: key,
-            emailBody: data[key].enteredEmailBody,
-            subject: data[key].enteredSubject,
-            senderEmail: data[key].enteredEmail,
-          });
-        }
-        dispatch(mailAction.mailData(loadData));
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  }, [dispatch]);
+  const Email = localStorage.getItem("emialId");
+  const idEmail = Email ? Email.replace(/[@.]/g, "") : null;
 
   console.log(items);
+
+  const updatingStatus = (ckey) => {
+    dispatch(mailAction.updateStatus(ckey));
+
+    // fetch(
+    //   `https://mail-box-fb2fe-default-rtdb.firebaseio.com/${idEmail}.json`,
+    //   {
+    //     method: "PUT",
+    //     body: JSON.stringify(),
+    //   }
+    // );
+  };
 
   return (
     <div>
@@ -48,13 +36,23 @@ const Inbox = () => {
         </Row>
         {items.map((item) => (
           <ListGroup key={item.ckey}>
-            <ListGroup.Item>
-              <Row>
-                <Col md={3}>{item.senderEmail}</Col>
-                <Col md={2}>{item.subject}</Col>
-                <Col>{item.emailBody}</Col>
-              </Row>
-            </ListGroup.Item>
+            <Link
+              style={{ textDecoration: "none" }}
+              to={`/profile/${item.ckey}`}
+            >
+              <ListGroup.Item
+                onClick={() => {
+                  updatingStatus(item.ckey);
+                }}
+              >
+                <Row>
+                  {!isRead && "*"}
+                  <Col md={3}>{item.senderEmail}</Col>
+                  <Col md={2}>{item.subject}</Col>
+                  <Col>{item.emailBody}</Col>
+                </Row>
+              </ListGroup.Item>
+            </Link>
           </ListGroup>
         ))}
       </div>

@@ -12,6 +12,7 @@ import ProfilePage from "./components/pages/ProfilePage";
 import Mailbox from "./components/pages/Mail/Mailbox";
 import Inbox from "./components/pages/Mail/Inbox";
 import Root from "./components/pages/Root";
+import Reademail from "./components/pages/Mail/Reademail";
 
 function App() {
   const isUserLoggedIn = useSelector((state) => state.auth.isUserLoggedIn);
@@ -29,8 +30,11 @@ function App() {
         <Route path="/forgotPass">
           <ForgotPass />
         </Route>
-        <Route path="/profile">
+        <Route path="/profile" exact>
           <ProfilePage />
+        </Route>
+        <Route path="/profile/:emailID">
+          <Reademail />
         </Route>
       </Switch>
     </Root>
