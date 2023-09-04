@@ -1,18 +1,17 @@
 import React from "react";
 import { Button, Col, ListGroup, Row } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom/cjs/react-router-dom";
-import { mailAction } from "../../store/mail-Slice";
+// import { mailAction } from "../../store/mail-Slice";
 
 const Inbox = () => {
   const items = useSelector((state) => state.mail.items);
   const isRead = useSelector((state) => state.mail.isRead);
-  const dispatch = useDispatch();
 
   const Email = localStorage.getItem("emialId");
   const idEmail = Email ? Email.replace(/[@.]/g, "") : null;
 
-  console.log(items);
+  // console.log(items);
 
   const updatingStatus = (ckey) => {
     // dispatch(mailAction.updateStatus(ckey));

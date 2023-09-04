@@ -4,6 +4,7 @@ import Mailbox from "./Mail/Mailbox";
 import Inbox from "./Mail/Inbox";
 import { useDispatch, useSelector } from "react-redux";
 import { mailAction } from "../store/mail-Slice";
+import Sentbox from "./Mail/Sentbox";
 
 const ProfilePage = () => {
   const [show, setShow] = useState(null);
@@ -46,9 +47,11 @@ const ProfilePage = () => {
       <div>Welcome to the Mail</div>
       <Button onClick={() => setShow("compose")}>Compose Mail</Button>
       <Button onClick={() => setShow("inbox")}>Inbox</Button>
+      <Button onClick={() => setShow("sentBox")}>Sentbox</Button>
       <hr></hr>
       {show === "compose" && <Mailbox />}
       {show === "inbox" && <Inbox />}
+      {show === "sentBox" && <Sentbox />}
     </div>
   );
 };
