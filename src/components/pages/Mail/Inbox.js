@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, ListGroup, Row } from "react-bootstrap";
+import { Button, Col, ListGroup, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom/cjs/react-router-dom";
 import { mailAction } from "../../store/mail-Slice";
@@ -15,15 +15,28 @@ const Inbox = () => {
   console.log(items);
 
   const updatingStatus = (ckey) => {
-    dispatch(mailAction.updateStatus(ckey));
-
+    // dispatch(mailAction.updateStatus(ckey));
+    // let existingItem = items.find((item) => item.ckey === ckey);
+    // let updateItem = { ...existingItem, isRead: true };
+    // // let itemsAfter = items.filter((item) => item.ckey !== existingItem.ckey);
+    // // let load = [...itemsAfter, { ...existingItem, isRead: true }];
+    // console.log(updateItem);
     // fetch(
-    //   `https://mail-box-fb2fe-default-rtdb.firebaseio.com/${idEmail}.json`,
+    //   `https://mail-box-fb2fe-default-rtdb.firebaseio.com/${idEmail}/${ckey}.json`,
     //   {
     //     method: "PUT",
-    //     body: JSON.stringify(),
+    //     body: JSON.stringify(updateItem),
     //   }
     // );
+  };
+
+  const onDeleteHandler = (ckey) => {
+    fetch(
+      `https://mail-box-fb2fe-default-rtdb.firebaseio.com/${idEmail}/${ckey}.json`,
+      {
+        method: "Delete",
+      }
+    );
   };
 
   return (
@@ -50,6 +63,16 @@ const Inbox = () => {
                   <Col md={3}>{item.senderEmail}</Col>
                   <Col md={2}>{item.subject}</Col>
                   <Col>{item.emailBody}</Col>
+                  <Col>
+                    <Button
+                      varient="danger"
+                      onClick={() => {
+                        onDeleteHandler(item.ckey);
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </Col>
                 </Row>
               </ListGroup.Item>
             </Link>

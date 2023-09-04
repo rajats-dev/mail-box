@@ -19,6 +19,16 @@ const mailSlice = createSlice({
         //   state.isRead = true;
       }
     },
+
+    // deleteItem(state, action) {
+    //   let existingItem = state.items.find(
+    //     (item) => item.ckey === action.payload
+    //   );
+
+    //   state.items = state.items.filter(
+    //     (item) => item.ckey !== existingItem.ckey
+    //   );
+    // },
   },
 });
 
