@@ -14,32 +14,37 @@ const ProfilePage = () => {
   const idEmail = Email ? Email.replace(/[@.]/g, "") : null;
 
   useEffect(() => {
-    fetch(`https://mail-box-fb2fe-default-rtdb.firebaseio.com/${idEmail}.json`)
-      .then((res) => {
-        return res.json();
-      })
-      .catch((error) => {
-        return error;
-      })
-      .then((data) => {
-        console.log(data);
-        let loadData = [];
-        for (const key in data) {
-          loadData.push({
-            ckey: key,
-            emailBody: data[key].enteredEmailBody,
-            subject: data[key].enteredSubject,
-            senderEmail: data[key].enteredEmail,
-            isRead: data[key].isRead,
-          });
-        }
-        console.log(loadData);
+    setInterval(() => {
+      fetch(
+        `https://mail-box-fb2fe-default-rtdb.firebaseio.com/${idEmail}.json`
+      )
+        .then((res) => {
+          return res.json();
+        })
+        .catch((error) => {
+          return error;
+        })
+        .then((data) => {
+          console.log(data);
+          let loadData = [];
+          for (const key in data) {
+            loadData.push({
+              ckey: key,
+              emailBody: data[key].enteredEmailBody,
+              subject: data[key].enteredSubject,
+              senderEmail: data[key].enteredEmail,
+              isRead: data[key].isRead,
+            });
+          }
+          console.log(loadData);
 
-        dispatch(mailAction.mailData(loadData));
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+          dispatch(mailAction.mailData(loadData));
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }, 5000);
+    return () => clearInterval(intervalId);
   }, [dispatch]);
 
   return (

@@ -12,13 +12,12 @@ const Mailbox = () => {
     setEmailBody(newText);
   };
 
-  console.log(emailBody);
+  // console.log(emailBody);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
     const enteredEmail = emailInptRef.current.value;
     const enteredSubject = subjectInputRef.current.value;
-
     const idEmail = enteredEmail.replace(/[@.]/g, "");
 
     let obj = {
