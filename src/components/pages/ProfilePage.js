@@ -25,7 +25,6 @@ const ProfilePage = () => {
           return error;
         })
         .then((data) => {
-          console.log(data);
           let loadData = [];
           for (const key in data) {
             loadData.push({
@@ -44,7 +43,7 @@ const ProfilePage = () => {
           console.log(err.message);
         });
     }, 5000);
-    return () => clearInterval(intervalId);
+    return () => clearInterval();
   }, [dispatch]);
 
   return (
