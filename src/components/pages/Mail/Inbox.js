@@ -33,6 +33,13 @@ const Inbox = () => {
     deleteEmail(idEmail, ckey);
   };
 
+  const parse = (html) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    const content = doc.body.textContent;
+    return content;
+  };
+
   return (
     <div>
       <div className="container">
@@ -56,7 +63,7 @@ const Inbox = () => {
                   {!isRead && "*"}
                   <Col md={3}>{item.senderEmail}</Col>
                   <Col md={2}>{item.subject}</Col>
-                  <Col>{item.emailBody}</Col>
+                  <Col>{parse(item.emailBody)}</Col>
                   <Col>
                     <Button
                       variant="danger"

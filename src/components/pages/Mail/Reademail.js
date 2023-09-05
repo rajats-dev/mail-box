@@ -8,10 +8,24 @@ const Reademail = () => {
 
   const email = items.filter((item) => item.ckey == param.emailID);
 
+  const parse = (html) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    const content = doc.body.textContent;
+
+    console.log(content);
+
+    return content;
+  };
+
   return (
-    <div>
+    <div className="container">
+      <h4>Email Messasge</h4>
+      <hr></hr>
       {email.map((item) => (
-        <div key={item.ckey}>{item.emailBody}</div>
+        <div key={item.ckey} style={{ fontSize: "20px" }}>
+          {parse(item.emailBody)}
+        </div>
       ))}
     </div>
   );
