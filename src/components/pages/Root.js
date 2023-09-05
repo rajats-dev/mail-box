@@ -1,10 +1,10 @@
 import React from "react";
-import Header from "./Header";
+import Headers from "./Headers";
 
 const Root = (props) => {
   return (
     <div>
-      <Header></Header>
+      <Headers></Headers>
       <main>{props.children}</main>
     </div>
   );

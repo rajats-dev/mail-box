@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Col, ListGroup, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom/cjs/react-router-dom";
-// import { mailAction } from "../../store/mail-Slice";
+import { useFetch } from "../useFetch";
 
 const Inbox = () => {
   const items = useSelector((state) => state.mail.items);
@@ -11,7 +11,7 @@ const Inbox = () => {
   const Email = localStorage.getItem("emialId");
   const idEmail = Email ? Email.replace(/[@.]/g, "") : null;
 
-  // console.log(items);
+  const { deleteEmail } = useFetch();
 
   const updatingStatus = (ckey) => {
     // dispatch(mailAction.updateStatus(ckey));
@@ -30,12 +30,7 @@ const Inbox = () => {
   };
 
   const onDeleteHandler = (ckey) => {
-    fetch(
-      `https://mail-box-fb2fe-default-rtdb.firebaseio.com/${idEmail}/${ckey}.json`,
-      {
-        method: "Delete",
-      }
-    );
+    deleteEmail(idEmail, ckey);
   };
 
   return (
@@ -64,7 +59,7 @@ const Inbox = () => {
                   <Col>{item.emailBody}</Col>
                   <Col>
                     <Button
-                      varient="danger"
+                      variant="danger"
                       onClick={() => {
                         onDeleteHandler(item.ckey);
                       }}

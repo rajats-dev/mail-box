@@ -2,11 +2,14 @@ import React, { useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useFetch } from "../useFetch";
 
 const Mailbox = () => {
   const emailInptRef = useRef();
   const subjectInputRef = useRef();
   const [emailBody, setEmailBody] = useState("");
+
+  const { sendEmail } = useFetch();
 
   const handleChange = (newText) => {
     setEmailBody(newText);
@@ -28,25 +31,7 @@ const Mailbox = () => {
       isRead: false,
     };
 
-    fetch(
-      `https://mail-box-fb2fe-default-rtdb.firebaseio.com/${idEmail}.json`,
-      {
-        method: "POST",
-        body: JSON.stringify(obj),
-      }
-    )
-      .then((res) => {
-        return res.json();
-      })
-      .catch((error) => {
-        return error;
-      })
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+    sendEmail(idEmail, obj);
   };
 
   return (

@@ -2,33 +2,15 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const mailSlice = createSlice({
   name: "mail",
-  initialState: { items: [], isRead: false },
+  initialState: { items: [], isRead: false, someChange: false },
   reducers: {
     mailData(state, action) {
       state.items = action.payload;
     },
-    updateStatus(state, action) {
-      let existingItem = state.items.find(
-        (item) => item.ckey === action.payload
-      );
-      console.log(existingItem);
-      console.log(state.items);
 
-      if (existingItem) {
-        existingItem.isRead = true;
-        //   state.isRead = true;
-      }
+    someChanges(state) {
+      state.someChange = !state.someChange;
     },
-
-    // deleteItem(state, action) {
-    //   let existingItem = state.items.find(
-    //     (item) => item.ckey === action.payload
-    //   );
-
-    //   state.items = state.items.filter(
-    //     (item) => item.ckey !== existingItem.ckey
-    //   );
-    // },
   },
 });
 
