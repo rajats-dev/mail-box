@@ -1,36 +1,45 @@
 import React from "react";
 import { Button, Col, ListGroup, Row } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom/cjs/react-router-dom";
 import { useFetch } from "../useFetch";
+import { mailAction } from "../../store/mail-Slice";
 
-const Inbox = () => {
-  const items = useSelector((state) => state.mail.items);
-  const isRead = useSelector((state) => state.mail.isRead);
+const Inbox = (props) => {
+  const items = useSelector((state) =>
+    props.itis ? state.mail.itemsSentBox : state.mail.itemsInbox
+  );
+
+  const dispatch = useDispatch();
 
   const Email = localStorage.getItem("emialId");
   const idEmail = Email ? Email.replace(/[@.]/g, "") : null;
 
   const { deleteEmail } = useFetch();
 
-  const updatingStatus = (ckey) => {
-    // dispatch(mailAction.updateStatus(ckey));
-    // let existingItem = items.find((item) => item.ckey === ckey);
-    // let updateItem = { ...existingItem, isRead: true };
-    // // let itemsAfter = items.filter((item) => item.ckey !== existingItem.ckey);
-    // // let load = [...itemsAfter, { ...existingItem, isRead: true }];
-    // console.log(updateItem);
-    // fetch(
-    //   `https://mail-box-fb2fe-default-rtdb.firebaseio.com/${idEmail}/${ckey}.json`,
-    //   {
-    //     method: "PUT",
-    //     body: JSON.stringify(updateItem),
-    //   }
-    // );
+  const updatingStatus = (el) => {
+    let obj = {
+      enteredEmail: el.senderEmail,
+      enteredEmailBody: el.emailBody,
+      enteredSubject: el.subject,
+      id: el.id,
+      isRead: true,
+    };
+    fetch(
+      `https://mail-box-fb2fe-default-rtdb.firebaseio.com/${idEmail}/inbox/${el.ckey}.json`,
+      {
+        method: "PUT",
+        body: JSON.stringify(obj),
+      }
+    );
   };
 
   const onDeleteHandler = (ckey) => {
-    deleteEmail(idEmail, ckey);
+    if (props.itis) {
+      deleteEmail(idEmail, ckey, "sentbox");
+    } else {
+      deleteEmail(idEmail, ckey, "inbox");
+    }
   };
 
   const parse = (html) => {
@@ -44,40 +53,47 @@ const Inbox = () => {
     <div>
       <div className="container">
         <Row className="container">
-          <Col md={3}>Sender Email</Col>
-          <Col md={2}>Subject Line</Col>
+          {props.itis && <Col md={4}>Sent Email</Col>}
+          {!props.itis && <Col md={4}>Recived Inbox Email</Col>}
+
+          <Col md={3}>Subject Line</Col>
           <Col>Email Body</Col>
         </Row>
         {items.map((item) => (
-          <ListGroup key={item.ckey}>
-            <Link
-              style={{ textDecoration: "none" }}
-              to={`/profile/${item.ckey}`}
-            >
-              <ListGroup.Item
+          <Row key={item.ckey}>
+            <Col md={10}>
+              <ListGroup>
+                <Link
+                  style={{ textDecoration: "none" }}
+                  to={`/profile/${item.ckey}`}
+                >
+                  <ListGroup.Item
+                    onClick={() => {
+                      dispatch(mailAction.clickItem(item));
+                      !props.itis && updatingStatus(item);
+                    }}
+                  >
+                    <Row>
+                      {!props.itis ? (!item.isRead ? "🟢" : "✔️") : null}
+                      <Col md={5}>{item.senderEmail}</Col>
+                      <Col md={3}>{item.subject}</Col>
+                      <Col>{parse(item.emailBody)}</Col>
+                    </Row>
+                  </ListGroup.Item>
+                </Link>
+              </ListGroup>
+            </Col>
+            <Col>
+              <Button
+                variant="danger"
                 onClick={() => {
-                  updatingStatus(item.ckey);
+                  onDeleteHandler(item.ckey);
                 }}
               >
-                <Row>
-                  {!isRead && "*"}
-                  <Col md={3}>{item.senderEmail}</Col>
-                  <Col md={2}>{item.subject}</Col>
-                  <Col>{parse(item.emailBody)}</Col>
-                  <Col>
-                    <Button
-                      variant="danger"
-                      onClick={() => {
-                        onDeleteHandler(item.ckey);
-                      }}
-                    >
-                      Delete
-                    </Button>
-                  </Col>
-                </Row>
-              </ListGroup.Item>
-            </Link>
-          </ListGroup>
+                Delete
+              </Button>
+            </Col>
+          </Row>
         ))}
       </div>
     </div>

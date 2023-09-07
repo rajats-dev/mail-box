@@ -9,7 +9,7 @@ const Mailbox = () => {
   const subjectInputRef = useRef();
   const [emailBody, setEmailBody] = useState("");
 
-  const { sendEmail } = useFetch();
+  const { sendEmail, allEmail } = useFetch();
 
   const handleChange = (newText) => {
     setEmailBody(newText);
@@ -22,6 +22,8 @@ const Mailbox = () => {
     const enteredEmail = emailInptRef.current.value;
     const enteredSubject = subjectInputRef.current.value;
     const idEmail = enteredEmail.replace(/[@.]/g, "");
+    const signInEmail = localStorage.getItem("emialId");
+    const signInID = signInEmail.replace(/[@.]/g, "");
 
     let obj = {
       enteredEmail: enteredEmail,
@@ -32,6 +34,7 @@ const Mailbox = () => {
     };
 
     sendEmail(idEmail, obj);
+    allEmail(signInID, obj);
   };
 
   return (

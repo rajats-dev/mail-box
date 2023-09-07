@@ -2,12 +2,26 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const mailSlice = createSlice({
   name: "mail",
-  initialState: { items: [], isRead: false, someChange: false },
+  initialState: {
+    itemsInbox: [],
+    itemsSentBox: [],
+    someChange: false,
+    clickitem: {},
+    unReadMess: null,
+  },
   reducers: {
-    mailData(state, action) {
-      state.items = action.payload;
+    inboxData(state, action) {
+      state.itemsInbox = action.payload;
     },
-
+    sentboxData(state, action) {
+      state.itemsSentBox = action.payload;
+    },
+    clickItem(state, action) {
+      state.clickitem = action.payload;
+    },
+    totalUnread(state, action) {
+      state.unReadMess = action.payload;
+    },
     someChanges(state) {
       state.someChange = !state.someChange;
     },
