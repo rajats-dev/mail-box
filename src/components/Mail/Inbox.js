@@ -7,7 +7,7 @@ import { MailAction } from "../../features/mailSlice/MailSlice";
 
 const Inbox = (props) => {
   const items = useSelector((state) =>
-    props.itis ? state.mail.itemsSentBox : state.mail.itemsInbox
+    props.iThis ? state.mail.itemsSentBox : state.mail.itemsInbox
   );
 
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ const Inbox = (props) => {
   };
 
   const onDeleteHandler = (ckey) => {
-    if (props.itis) {
+    if (props.iThis) {
       deleteEmail(idEmail, ckey, "sentbox");
     } else {
       deleteEmail(idEmail, ckey, "inbox");
@@ -53,8 +53,8 @@ const Inbox = (props) => {
     <div>
       <div className="container">
         <Row className="container">
-          {props.itis && <Col md={4}>Sent Email</Col>}
-          {!props.itis && <Col md={4}>Recived Inbox Email</Col>}
+          {props.iThis && <Col md={4}>Sent Email</Col>}
+          {!props.iThis && <Col md={4}>Recived Inbox Email</Col>}
 
           <Col md={3}>Subject Line</Col>
           <Col>Email Body</Col>
@@ -70,11 +70,11 @@ const Inbox = (props) => {
                   <ListGroup.Item
                     onClick={() => {
                       dispatch(MailAction.clickItem(item));
-                      !props.itis && updatingStatus(item);
+                      !props.iThis && updatingStatus(item);
                     }}
                   >
                     <Row>
-                      {!props.itis ? (!item.isRead ? "🟢" : "✔️") : null}
+                      {!props.iThis ? (!item.isRead ? "🟢" : "✔️") : null}
                       <Col md={5}>{item.senderEmail}</Col>
                       <Col md={3}>{item.subject}</Col>
                       <Col>{parse(item.emailBody)}</Col>

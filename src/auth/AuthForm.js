@@ -4,6 +4,8 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch } from "react-redux";
 import { AuthAction } from "../features/authSlice/AuthSlice";
 
+const API_KEY = process.env.REACT_APP_GOOGLE_API;
+
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setLoading] = useState(false);
@@ -30,11 +32,9 @@ const AuthForm = () => {
       setLoading(true);
       let url;
       if (isLogin) {
-        url =
-          "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDlJiFxzYOLpvUDDqBsIU0Acic5VvoHS4k";
+        url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`;
       } else {
-        url =
-          "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDlJiFxzYOLpvUDDqBsIU0Acic5VvoHS4k";
+        url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`;
       }
 
       fetch(url, {

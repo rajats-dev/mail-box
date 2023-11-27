@@ -4,7 +4,7 @@ import Inbox from "./Inbox";
 const Sentbox = () => {
   return (
     <div>
-      <Inbox itis={"sentbox"} />
+      <Inbox iThis={"sentbox"} />
     </div>
   );
 };

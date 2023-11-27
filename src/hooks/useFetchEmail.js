@@ -32,14 +32,13 @@ const useFetchEmail = (url, someChange, from) => {
           const total = loadData.reduce((acc, curr) => {
             return acc + !curr.isRead;
           }, 0);
-          console.log(total);
           dispatch(MailAction.totalUnread(total));
         }
       })
       .catch((err) => {
         console.log(err.message);
       });
-  }, [dispatch, someChange]);
+  }, [dispatch, someChange, from, url]);
 
   return <div>useFetchEmail</div>;
 };
