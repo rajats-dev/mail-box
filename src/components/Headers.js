@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Container, Navbar } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom/cjs/react-router-dom";
-import { authAction } from "../store/auth-Slice";
+import { AuthAction } from "../features/authSlice/AuthSlice";
 
 const Headers = () => {
   const isUserLoggedIn = useSelector((state) => state.auth.isUserLoggedIn);
@@ -12,9 +12,11 @@ const Headers = () => {
     <div>
       <Navbar bg="dark" data-bs-theme="dark">
         <Container>
-          <Navbar.Brand href="#home" style={{ color: "white" }}>
-            Mail-box
-          </Navbar.Brand>
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <Navbar.Brand href="#home" style={{ color: "white" }}>
+              MailBox
+            </Navbar.Brand>
+          </Link>
           {!isUserLoggedIn && (
             <Link to="/auth">
               <Button>Login</Button>
@@ -24,7 +26,7 @@ const Headers = () => {
             <Link to="/auth">
               <Button
                 onClick={() => {
-                  dispatch(authAction.logout());
+                  dispatch(AuthAction.logout());
                   localStorage.removeItem("emialId");
                   localStorage.removeItem("token");
                 }}

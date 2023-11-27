@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { mailAction } from "../store/mail-Slice";
+import { MailAction } from "../features/mailSlice/MailSlice";
 
 const useFetchEmail = (url, someChange, from) => {
   const dispatch = useDispatch();
@@ -26,14 +26,14 @@ const useFetchEmail = (url, someChange, from) => {
         }
 
         if (from === "sentbox") {
-          dispatch(mailAction.sentboxData(loadData));
+          dispatch(MailAction.sentboxData(loadData));
         } else {
-          dispatch(mailAction.inboxData(loadData));
+          dispatch(MailAction.inboxData(loadData));
           const total = loadData.reduce((acc, curr) => {
             return acc + !curr.isRead;
           }, 0);
           console.log(total);
-          dispatch(mailAction.totalUnread(total));
+          dispatch(MailAction.totalUnread(total));
         }
       })
       .catch((err) => {

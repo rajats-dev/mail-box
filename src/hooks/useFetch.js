@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { mailAction } from "../store/mail-Slice";
+import { MailAction } from "../features/mailSlice/MailSlice";
 
 export const useFetch = () => {
   const dispatch = useDispatch();
@@ -12,7 +12,7 @@ export const useFetch = () => {
           method: "DELETE",
         }
       );
-      dispatch(mailAction.someChanges());
+      dispatch(MailAction.someChanges());
       if (!res.ok) {
         throw new Error("Failed to delete email");
       }
@@ -36,7 +36,7 @@ export const useFetch = () => {
       }
 
       const data = await response.json();
-      dispatch(mailAction.someChanges());
+      dispatch(MailAction.someChanges());
       return data;
     } catch (err) {
       console.log(err);
@@ -58,7 +58,7 @@ export const useFetch = () => {
       }
 
       const data = await response.json();
-      dispatch(mailAction.someChanges());
+      dispatch(MailAction.someChanges());
       return data;
     } catch (err) {
       console.log(err);

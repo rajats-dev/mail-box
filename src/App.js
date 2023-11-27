@@ -3,13 +3,13 @@ import {
   Route,
   Switch,
 } from "react-router-dom/cjs/react-router-dom.min";
-import Authform from "./components/Auth/Authform";
-import ForgotPass from "./components/pages/ForgotPass";
-import Home from "./components/pages/Home";
+import AuthForm from "./auth/AuthForm";
+import ForgotPass from "./components/ForgotPass";
+import Home from "./pages/Home";
 import { useSelector } from "react-redux";
-import ProfilePage from "./components/pages/ProfilePage";
-import Root from "./components/pages/Root";
-import Reademail from "./components/pages/Mail/Reademail";
+import ProfilePage from "./pages/ProfilePage";
+import Root from "./components/Root";
+import ReadMail from "./components/Mail/ReadMail";
 
 function App() {
   const isUserLoggedIn = useSelector((state) => state.auth.isUserLoggedIn);
@@ -21,8 +21,8 @@ function App() {
           <Home />
         </Route>
         <Route path="/auth">
-          {!isUserLoggedIn && <Authform />}
-          {isUserLoggedIn && <Redirect to="/profile" />}
+          {!isUserLoggedIn && <AuthForm />}
+          {isUserLoggedIn && <Redirect to="/" />}
         </Route>
         <Route path="/forgotPass">
           <ForgotPass />
@@ -31,7 +31,7 @@ function App() {
           <ProfilePage />
         </Route>
         <Route path="/profile/:emailID">
-          <Reademail />
+          <ReadMail />
         </Route>
       </Switch>
     </Root>

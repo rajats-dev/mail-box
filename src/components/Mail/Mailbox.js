@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useFetch } from "../useFetch";
+import { useFetch } from "../../hooks/useFetch";
 
 const Mailbox = () => {
   const emailInptRef = useRef();
@@ -14,8 +14,6 @@ const Mailbox = () => {
   const handleChange = (newText) => {
     setEmailBody(newText);
   };
-
-  // console.log(emailBody);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();

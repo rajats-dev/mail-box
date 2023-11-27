@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
-import classes from "./Authform.module.css";
+import classes from "./AuthForm.module.css";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch } from "react-redux";
-import { authAction } from "../store/auth-Slice";
+import { AuthAction } from "../features/authSlice/AuthSlice";
 
-const Authform = () => {
+const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setLoading] = useState(false);
   const emailInputRef = useRef();
@@ -64,7 +64,7 @@ const Authform = () => {
           }
         })
         .then((data) => {
-          dispatch(authAction.login());
+          dispatch(AuthAction.login());
           localStorage.setItem("token", data.idToken);
           localStorage.setItem("emialId", data.email);
           console.log(data);
@@ -138,4 +138,4 @@ const Authform = () => {
   );
 };
 
-export default Authform;
+export default AuthForm;

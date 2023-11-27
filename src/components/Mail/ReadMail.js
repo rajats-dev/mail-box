@@ -1,12 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
-// import { useParams } from "react-router-dom/cjs/react-router-dom";
 
-const Reademail = (props) => {
-  const items = useSelector((state) => state.mail.clickitem);
-
-  // const param = useParams();
-  // const email = items.filter((item) => item.ckey == param.emailID);
+const ReadMail = (props) => {
+  const items = useSelector((state) => state.mail.clickItem);
 
   const parse = (html) => {
     const parser = new DOMParser();
@@ -26,4 +22,4 @@ const Reademail = (props) => {
   );
 };
 
-export default Reademail;
+export default ReadMail;

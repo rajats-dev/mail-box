@@ -2,8 +2,8 @@ import React from "react";
 import { Button, Col, ListGroup, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom/cjs/react-router-dom";
-import { useFetch } from "../useFetch";
-import { mailAction } from "../../store/mail-Slice";
+import { useFetch } from "../../hooks/useFetch";
+import { MailAction } from "../../features/mailSlice/MailSlice";
 
 const Inbox = (props) => {
   const items = useSelector((state) =>
@@ -69,7 +69,7 @@ const Inbox = (props) => {
                 >
                   <ListGroup.Item
                     onClick={() => {
-                      dispatch(mailAction.clickItem(item));
+                      dispatch(MailAction.clickItem(item));
                       !props.itis && updatingStatus(item);
                     }}
                   >
