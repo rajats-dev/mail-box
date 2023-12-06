@@ -12,10 +12,15 @@ const Headers = () => {
     <div>
       <Navbar bg="dark" data-bs-theme="dark">
         <Container>
-          <Link to="/" style={{ textDecoration: "none" }}>
-            <Navbar.Brand href="#home" style={{ color: "white" }}>
-              MailBox
-            </Navbar.Brand>
+          <Link
+            to="/"
+            style={{
+              textDecoration: "none",
+              color: "white",
+              fontSize: "30px",
+            }}
+          >
+            MailBox
           </Link>
           {!isUserLoggedIn && (
             <Link to="/auth">

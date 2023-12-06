@@ -18,11 +18,15 @@ function App() {
     <Root>
       <Switch>
         <Route path="/" exact>
+          {!isUserLoggedIn && <AuthForm />}
+          {isUserLoggedIn && <Redirect to="/home" />}
+        </Route>
+        <Route path="/home" exact>
           <Home />
         </Route>
         <Route path="/auth">
           {!isUserLoggedIn && <AuthForm />}
-          {isUserLoggedIn && <Redirect to="/" />}
+          {isUserLoggedIn && <Redirect to="/home" />}
         </Route>
         <Route path="/forgotPass">
           <ForgotPass />
